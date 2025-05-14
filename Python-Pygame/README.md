@@ -2,7 +2,8 @@
 
 This is a classic Space Invaders-style arcade game built with Python and Pygame as part of the Making A Game In Every Language project.
 
-![Gameplay Screenshot](img/bg.png)
+
+<img width="585" alt="Screenshot 2025-05-14 at 10 53 37 PM" src="https://github.com/user-attachments/assets/5634fa67-8278-4910-8f4a-37b66e34a1ca" />
 
 ## 🎮 Game Overview
 
