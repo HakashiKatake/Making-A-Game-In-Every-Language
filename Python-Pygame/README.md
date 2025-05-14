@@ -17,7 +17,7 @@ Control your spaceship to defend against waves of aliens. Shoot down all the ali
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YourUsername/Making-A-Game-In-Every-Language.git
+   git clone https://github.com/HakashiKatake/Making-A-Game-In-Every-Language.git
    cd Making-A-Game-In-Every-Language/Python-Pygame
    ```
 
