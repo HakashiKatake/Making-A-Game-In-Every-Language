@@ -19,6 +19,7 @@ bg = pygame.image.load('img/bg.png')
 def draw_bg():
     screen.blit(bg, (0,0))
 
+
 class SpaceShip(pygame.sprite.Sprite):
     def __init__(self, x, y, health):
         pygame.sprite.Sprite.__init__(self)
@@ -27,10 +28,13 @@ class SpaceShip(pygame.sprite.Sprite):
         self.rect.center = [x ,y]
         self.health_start = health
         self.health_remaining = health
+        self.last_shot = pygame.time.get_ticks()
         
 
     def update(self):
         speed = 8
+
+        cooldown = 500
 
         key = pygame.key.get_pressed()
         if key[pygame.K_LEFT] or key[pygame.K_a] and self.rect.x > 0:
@@ -38,16 +42,41 @@ class SpaceShip(pygame.sprite.Sprite):
         if key[pygame.K_RIGHT] or key[pygame.K_d] and self.rect.right < screen_width:
             self.rect.x += speed
 
+        time_now = pygame.time.get_ticks()
+        if (key[pygame.K_SPACE] or pygame.mouse.get_pressed()[0]) and time_now - self.last_shot > cooldown:
+            bullet = Bullets(self.rect.centerx, self.rect.top)
+            bullet_group.add(bullet)
+            self.last_shot = time_now
+
+
         #draw health bar
         pygame.draw.rect(screen, red, (self.rect.x, (self.rect.bottom + 10), self.rect.width, 15))
         if self.health_remaining > 0:
             pygame.draw.rect(screen, green, (self.rect.x, (self.rect.bottom + 10), int(self.rect.width * (self.health_remaining / self.health_start)), 15))
 
+        
+class Bullets(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load('img/bullet.png')
+        self.rect = self.image.get_rect()
+        self.rect.center = [x ,y]
+
+    def update(self):
+        self.rect.y -= 5
+        if self.rect.bottom < 0:
+            self.kill()
+
+
+        
 
 
 
+#create sprites group
 spaceship_group = pygame.sprite.Group()
+bullet_group = pygame.sprite.Group()
 
+#initialize sprites
 spaceship = SpaceShip(int(screen_width / 2), screen_height - 100, 3)
 spaceship_group.add(spaceship)
 
@@ -71,9 +100,15 @@ while run:
         if event.type == QUIT:
             run = False
 
+    #update spaceship
     spaceship_group.update()        
 
+    #update sprite groups
+    bullet_group.update()
+
+    #draw sprite groups
     spaceship_group.draw(screen)
+    bullet_group.draw(screen)
 
     pygame.display.update()
 
