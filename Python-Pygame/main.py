@@ -1,6 +1,9 @@
 import pygame
-
 from pygame.locals import * 
+
+clock = pygame.time.Clock()
+fps = 60
+
 
 
 screen_width = 600
@@ -18,6 +21,8 @@ pygame.display.set_caption("Pygame Window")
 run = True
 while run:
 
+
+    clock.tick(fps) # 60 FPS
     #draw background
     draw_bg()
 
