@@ -24,7 +24,7 @@
 | **Java**       | libGDX               | Brick breaker       |
 | **JavaScript** | Phaser / Three.js    | Flappy Bird clone   |
 | **TypeScript** | PlayCanvas           | Basic 3D platformer |
-| **Python**     | Pygame               | Retro arcade game   |
+| ~~**Python**~~    | ~~Pygame~~             | ~~Retro arcade game~~   |
 | **Lua**        | LÖVE (Love2D)        | Top‑down adventure  |
 | **Rust**       | Bevy                 | Puzzle game         |
 | **Go**         | Ebiten               | Arcade shooter      |
