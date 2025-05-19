@@ -6,34 +6,15 @@ import (
 	"image/color"
 	"log"
 
+	"github.com/HakashiKatake/Making-A-Game-In-Every-Language/Go-Ebiten/go-rpg/entities"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-type Sprite struct {
-	Img  *ebiten.Image
-	X, Y float64
-}
-
-type Player struct {
-	*Sprite
-	Health uint
-}
-
-type Enemy struct {
-	*Sprite
-	FollowsPlayer bool
-}
-
-type Potion struct {
-	*Sprite
-	AmtHeal uint
-}
-
 type Game struct {
-	player      *Player
-	enemies     []*Enemy
-	potions     []*Potion
+	player      *entities.Player
+	enemies     []*entities.Enemy
+	potions     []*entities.Potion
 	tilemapJSON *TilemapJSON
 	tilemapImg  *ebiten.Image
 }
@@ -198,17 +179,17 @@ func main() {
 	}
 
 	game := Game{
-		player: &Player{
-			Sprite: &Sprite{
+		player: &entities.Player{
+			Sprite: &entities.Sprite{
 				Img: playerImg,
 				X:   50.0,
 				Y:   50.0,
 			},
 			Health: 3,
 		},
-		enemies: []*Enemy{
+		enemies: []*entities.Enemy{
 			{
-				&Sprite{
+				&entities.Sprite{
 					Img: skeletonImg,
 					X:   100.0,
 					Y:   100.0,
@@ -216,7 +197,7 @@ func main() {
 				true,
 			},
 			{
-				&Sprite{
+				&entities.Sprite{
 					Img: skeletonImg,
 					X:   150.0,
 					Y:   50.0,
@@ -224,9 +205,9 @@ func main() {
 				false,
 			},
 		},
-		potions: []*Potion{
+		potions: []*entities.Potion{
 			{
-				&Sprite{
+				&entities.Sprite{
 					Img: potionImg,
 					X:   210.0,
 					Y:   100.0,
