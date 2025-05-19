@@ -189,30 +189,30 @@ func main() {
 		},
 		enemies: []*entities.Enemy{
 			{
-				&entities.Sprite{
+				Sprite: &entities.Sprite{
 					Img: skeletonImg,
 					X:   100.0,
 					Y:   100.0,
 				},
-				true,
+				FollowsPlayer: true,
 			},
 			{
-				&entities.Sprite{
+				Sprite: &entities.Sprite{
 					Img: skeletonImg,
 					X:   150.0,
 					Y:   50.0,
 				},
-				false,
+				FollowsPlayer: false,
 			},
 		},
 		potions: []*entities.Potion{
 			{
-				&entities.Sprite{
+				Sprite: &entities.Sprite{
 					Img: potionImg,
 					X:   210.0,
 					Y:   100.0,
 				},
-				1.0,
+				AmtHeal: 1,
 			},
 		},
 		tilemapJSON: tilemapJSON,
