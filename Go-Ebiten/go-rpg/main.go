@@ -6,7 +6,9 @@ import (
 	"image/color"
 	"log"
 
+	"github.com/HakashiKatake/Making-A-Game-In-Every-Language/Go-Ebiten/go-rpg/animations"
 	"github.com/HakashiKatake/Making-A-Game-In-Every-Language/Go-Ebiten/go-rpg/entities"
+	"github.com/HakashiKatake/Making-A-Game-In-Every-Language/Go-Ebiten/go-rpg/spritesheet"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/vector"
@@ -39,14 +41,16 @@ func CheckCollisionVertical(sprite *entities.Sprite, colliders []image.Rectangle
 
 type Game struct {
 	// the image and position variables for our player
-	player      *entities.Player
-	enemies     []*entities.Enemy
-	potions     []*entities.Potion
-	tilemapJSON *TilemapJSON
-	tilesets    []Tileset
-	tilemapImg  *ebiten.Image
-	cam         *Camera
-	colliders   []image.Rectangle
+	player                 *entities.Player
+	playerSpriteSheet      *spritesheet.SpriteSheet
+	playerRunningAnimation *animations.Animation
+	enemies                []*entities.Enemy
+	potions                []*entities.Potion
+	tilemapJSON            *TilemapJSON
+	tilesets               []Tileset
+	tilemapImg             *ebiten.Image
+	cam                    *Camera
+	colliders              []image.Rectangle
 }
 
 func (g *Game) Update() error {
@@ -168,7 +172,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	screen.DrawImage(
 		// grab a subimage of the spritesheet
 		g.player.Img.SubImage(
-			image.Rect(0, 0, 16, 16),
+			g.playerSpriteSheet.Rect(g.animationFrame),
 		).(*ebiten.Image),
 		&opts,
 	)
@@ -251,8 +255,13 @@ func main() {
 
 	tilesets, err := tilemapJSON.GenTilesets()
 	if err != nil {
+
 		log.Fatal(err)
 	}
+
+	playerSpriteSheet := spritesheet.NewSpriteSheet(4, 7, 16)
+
+	playerRunningAnimation := animations.NewAnimation(4, 12, 4, 20.0, 0.0)
 
 	game := Game{
 		player: &entities.Player{
@@ -263,6 +272,7 @@ func main() {
 			},
 			Health: 3,
 		},
+		playerSpriteSheet: playerSpriteSheet,
 		enemies: []*entities.Enemy{
 			{
 				Sprite: &entities.Sprite{
